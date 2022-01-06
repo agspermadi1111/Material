@@ -15,6 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $data['users'] = Users::all();
         $data['user'] = AUTH::user();
         $id = AUTH::user()->id;
         $data['role'] = Users::find($id);
@@ -33,7 +34,6 @@ class UserController extends Controller
      */
     public function create()
     {
-
     }
 
     public function notauthorized()
@@ -42,7 +42,6 @@ class UserController extends Controller
         $data['title'] = 'UD CIPTA INDAH - Not Authorized';
 
         return view('user.notauthorized', $data);
-
     }
 
     /**
@@ -125,10 +124,10 @@ class UserController extends Controller
             'file' => 'image|mimes:jpg,jpeg,png',
         ]);
         $file = $request->file('file');
-// isi dengan nama folder tempat kemana file diupload
+        // isi dengan nama folder tempat kemana file diupload
         $tujuan_upload = 'images/profile_user/';
 
-// upload file
+        // upload file
 
         $id = AUTH::User()->id;
         $gambarlama = AUTH::User()->image;
@@ -214,5 +213,4 @@ class UserController extends Controller
 
         return view('admin.setting_user.pattern-recognition', compact('user', 'title', 'sub_menu', 'face_pattern_models', 'users'));
     }
-
 }

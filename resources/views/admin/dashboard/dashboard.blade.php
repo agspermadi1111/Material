@@ -1,354 +1,321 @@
 @php
-// use App\Models\Data_kelas;
-// use App\Models\Setting_kelas_siswa;
-// use App\Models\Setting_kontrak_pengajaran;
-// use App\Models\Setting_materi_pertemuan;
-// use App\Models\Setting_master_materi;
-// use App\Models\Data_jawaban_materi_pembelajaran;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User_role;
+$role = AUTH::User()->user_role_id;
+$roleid = User_role::find($role);
 @endphp
 
-@extends('layouts.app')
-@push('css')
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/vendors/css/vendors.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/vendors/css/forms/wizard/bs-stepper.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/vendors/css/forms/select/select2.min.css') }}">
-    <!-- END: Vendor CSS-->
+<!DOCTYPE html>
+<html>
 
-    <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/bootstrap-extended.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/colors.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/components.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/themes/dark-layout.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/themes/bordered-layout.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/themes/semi-dark-layout.min.css') }}">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Ready Bootstrap Dashboard</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+        name='viewport' />
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="{{ asset('assets/css/ready.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
+</head>
 
-    <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/core/menu/menu-types/vertical-menu.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/plugins/charts/chart-apex.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/pages/app-invoice-list.min.css') }}">
-@endpush
-@section('content')
-
-    <div class="app-content content ">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper">
-            <div class="content-header row">
+<body>
+    <div class="wrapper">
+        <div class="main-header">
+            <div class="logo-header">
+                <a href="index.html" class="logo">
+                    Ready Dashboard
+                </a>
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
             </div>
-            <div class="content-body">
-                {{-- <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-danger" role="alert">
-                            <div class="alert-body">
-                                <strong>Info:</strong> Tahun ajaran aktif saat ini adalah&nbsp;
-                                pilih
-                                untuk
-                                merubah
-                                tahun ajaran aktif. Tahun ajaran yang
-                                dipilih
-                                saat ini <strong class="text-primary">.</strong>
-                                Pilih
-                                tombol
-                                <strong><u>Pilih tahun
-                                        ajaran</u></strong>
-                                untuk melakukan setting kelas siswa.
+            <nav class="navbar navbar-header navbar-expand-lg">
+                <div class="container-fluid">
+
+                    <form class="navbar-left navbar-form nav-search mr-md-3" action="">
+                        <div class="input-group">
+                            <input type="text" placeholder="Search ..." class="form-control">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-search search-icon"></i>
+                                </span>
                             </div>
                         </div>
-                    </div>
-                </div> --}}
-                <section id="dashboard-analytics">
-                    <div class="row match-height">
-                        <!-- Greetings Card starts -->
-                        <div class="col-lg-6 col-md-12 col-sm-12">
-                            <div class="card card-congratulations">
-                                <div class="card-body text-center">
-                                    <img src="{{ asset('/images/elements/decore-left.png') }}"
-                                        class="congratulations-img-left" alt="card-img-left">
-                                    <img src="{{ asset('/images/elements/decore-right.png') }}"
-                                        class="congratulations-img-right" alt="card-img-right">
-                                    <div class="avatar avatar-xl bg-primary shadow">
-                                        <div class="avatar-content">
-                                            <img src="{{ asset('/images/profile_user/' . $user->image) }}" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="text-center">
-                                        <h1 class="mb-1 text-white">Welcome {{ $user->name }},</h1>
-                                        <p class="card-text m-auto w-75">
-                                            Dashboard keseluruhan informasi UD CIPTA INDAH.
-                                        </p>
-                                    </div>
-                                </div>
+                    </form>
+                    <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="la la-envelope"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
                             </div>
-                        </div>
-                        <!-- Greetings Card ends -->
-
-                        <!-- Subscribers Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="users" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">{{ $sales }}</h2>
-                                    <p class="card-text">Total sales</p>
-                                </div>
-                                <div id="gained-chart"></div>
-                            </div>
-                        </div>
-                        <!-- Subscribers Chart Card ends -->
-
-                        <!-- Orders Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-warning p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="package" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">{{ $transaksi }}</h2>
-                                    <p class="card-text">Total Transaksi</p>
-                                </div>
-                                <div id="order-chart"></div>
-                            </div>
-                        </div>
-                        <!-- Orders Chart Card ends -->
-                    </div>
-
-
-                    <div class="row match-height">
-                        <!-- Timeline Card -->
-                        <div class="col-lg-4 col-12">
-                            <div class="card card-user-timeline">
-                                <div class="card-header">
-                                    <div class="d-flex align-items-center">
-                                        <i data-feather="list" class="user-timeline-title-icon"></i>
-                                        <h4 class="card-title">Tiga Transaksi Terakhir</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="timeline ml-50">
-                                        @foreach ($trk as $item)
-
-                                            <li class="timeline-item">
-                                                <span
-                                                    class="timeline-point timeline-point-success timeline-point-indicator"></span>
-                                                <div class="timeline-event">
-                                                    <h6>{{ $item->users->name }}</h6>
-                                                    <p>Toko: {{ $item->data_toko->nama_toko }}</p>
-                                                    <div class="media align-items-center">
-                                                        <div class="avatar mr-50">
-                                                            <img src="{{ asset('/images/profile_user/' . $item->users->image) }}"
-                                                                alt="Avatar" width="38" height="38">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h6 class="mb-0">Total: Rp. {{ $item->total }}</h6>
-                                                            <p class="mb-0">Komisi: Rp.
-                                                                {{ $item->data_komisi->komisi }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        @endforeach
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ Timeline Card -->
-
-                        <!-- Sales Stats Chart Card starts -->
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-start pb-1">
-                                    <div>
-                                        <h4 class="card-title mb-25"></h4>
-                                        {{-- <p class="card-text">Last 6 months</p> --}}
-                                    </div>
-                                    {{-- <div class="dropdown chart-dropdown">
-                                        <i data-feather="more-vertical" class="font-medium-3 cursor-pointer"
-                                            data-toggle="dropdown"></i>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                                        </div>
-                                    </div> --}}
-                                </div>
-                                <div class="card-body">
-                                    {{-- <div id="chart" style="height: 300px;"></div> --}}
-                                    <div id="containerr"></div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Sales Stats Chart Card ends -->
-
-                        <!-- App Design Card -->
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card card-app-design">
-                                <div class="card-body">
-                                    <div class="badge badge-light-primary">Tanggal: {{ date('d-M-Y') }}</div>
-                                    <h4 class="card-title mt-1 mb-75 pt-25">Harga saat ini</h4>
-                                    <p class="card-text font-small-2 mb-2">
-                                        Daftar harga dan komisi yang aktif saat ini
-                                    </p>
-                                    <div class="row p-1 mt-0">
-                                        <div class="design-group mb-2 pt-50">
-                                            <h6 class="section-label">Harga:</h6>
-                                            <div class="badge badge-light-warning mr-1">Rp.
-                                                {{ $harga ? $harga->harga : '' }}
+                        </li>
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="la la-bell"></i>
+                                <span class="notification">3</span>
+                            </a>
+                            <ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <div class="dropdown-title">You have 4 new notification</div>
+                                </li>
+                                <li>
+                                    <div class="notif-center">
+                                        <a href="#">
+                                            <div class="notif-icon notif-primary"> <i class="la la-user-plus"></i>
                                             </div>
-                                        </div>
-                                        <div class="design-group mb-2 pt-50">
-                                            <h6 class="section-label">Komisi:</h6>
-                                            @foreach ($komisis as $komisi)
-                                                <div class="badge badge-light-primary mr-1 my-50">Margin Rp.
-                                                    {{ $komisi->margin }} | Komisi Rp. {{ $komisi->komisi }}
-                                                </div><br>
-                                                {{-- <div class="badge badge-light-primary">Wireframe</div> --}}
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="design-group pt-25">
-                                        <h6 class="section-label">Sales</h6>
-                                        @foreach ($saless as $u)
-                                            <div class="avatar">
-                                                <img src="{{ asset('/images/profile_user/' . $u->image) }}" width="34"
-                                                    height="34" alt="Avatar">
+                                            <div class="notif-content">
+                                                <span class="block">
+                                                    New user registered
+                                                </span>
+                                                <span class="time">5 minutes ago</span>
                                             </div>
-                                        @endforeach
+                                        </a>
+                                        <a href="#">
+                                            <div class="notif-icon notif-success"> <i class="la la-comment"></i> </div>
+                                            <div class="notif-content">
+                                                <span class="block">
+                                                    Rahmad commented on Admin
+                                                </span>
+                                                <span class="time">12 minutes ago</span>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="notif-img">
+                                                <img src="{{ asset('assets/img/profile2.jpg') }}" alt="Img Profile">
+                                            </div>
+                                            <div class="notif-content">
+                                                <span class="block">
+                                                    Reza send messages to you
+                                                </span>
+                                                <span class="time">12 minutes ago</span>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="notif-icon notif-danger"> <i class="la la-heart"></i> </div>
+                                            <div class="notif-content">
+                                                <span class="block">
+                                                    Farrah liked Admin
+                                                </span>
+                                                <span class="time">17 minutes ago</span>
+                                            </div>
+                                        </a>
                                     </div>
-                                    {{-- <div class="design-planning-wrapper mb-2 py-75">
-                                        <div class="design-planning">
-                                            <p class="card-text mb-25">Due Date</p>
-                                            <h6 class="mb-0">12 Apr, 21</h6>
-                                        </div>
-                                        <div class="design-planning">
-                                            <p class="card-text mb-25">Budget</p>
-                                            <h6 class="mb-0">$49251.91</h6>
-                                        </div>
-                                        <div class="design-planning">
-                                            <p class="card-text mb-25">Cost</p>
-                                            <h6 class="mb-0">$840.99</h6>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-block">Join Team</button> --}}
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ App Design Card -->
-                    </div>
+                                </li>
+                                <li>
+                                    <a class="see-all" href="javascript:void(0);"> <strong>See all
+                                            notifications</strong> <i class="la la-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
+                                aria-expanded="false"> <img src="{{ asset('/images/profile_user/' . $user->image) }}"
+                                    alt="user-img" width="36"
+                                    class="img-circle"><span>{{ $user->name }}</span></span> </a>
+                            <span class="user-status">{{ $user->user_role->role }}</span>
+                            <ul class="dropdown-menu dropdown-user">
+                                <a class="dropdown-item" href="/user"><i class="ti-settings"></i> Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
+                            </ul>
+                            <!-- /.dropdown-user -->
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="sidebar">
+            <div class="scrollbar-inner sidebar-wrapper">
 
-
-                </section>
-
+                <ul class="nav">
+                    <li class="nav-item active">
+                        <a href="index.html">
+                            <i class="la la-dashboard"></i>
+                            <p>Dashboard</p>
+                            <span class="badge badge-count">5</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+        <div class="main-panel">
+            <div class="content">
+                <div class="container-fluid">
+                    <h4 class="page-title">Dashboard</h4>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card card-stats card-warning">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-7 d-flex align-items-center">
+                                            <div class="numbers">
+                                                <p class="card-category">>Welcome</p>
+                                                <h4 class="card-title"> {{ $user->name }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 							<div class="col-md-3">
+        <div class="card card-stats">
+         <div class="card-body ">
+          <div class="row">
+           <div class="col-5">
+            <div class="icon-big text-center icon-warning">
+             <i class="la la-pie-chart text-warning"></i>
+            </div>
+           </div>
+           <div class="col-7 d-flex align-items-center">
+            <div class="numbers">
+             <p class="card-category">Number</p>
+             <h4 class="card-title">150GB</h4>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="card card-stats">
+         <div class="card-body ">
+          <div class="row">
+           <div class="col-5">
+            <div class="icon-big text-center">
+             <i class="la la-bar-chart text-success"></i>
+            </div>
+           </div>
+           <div class="col-7 d-flex align-items-center">
+            <div class="numbers">
+             <p class="card-category">Revenue</p>
+             <h4 class="card-title">$ 1,345</h4>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="card card-stats">
+         <div class="card-body">
+          <div class="row">
+           <div class="col-5">
+            <div class="icon-big text-center">
+             <i class="la la-times-circle-o text-danger"></i>
+            </div>
+           </div>
+           <div class="col-7 d-flex align-items-center">
+            <div class="numbers">
+             <p class="card-category">Errors</p>
+             <h4 class="card-title">23</h4>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="card card-stats">
+         <div class="card-body">
+          <div class="row">
+           <div class="col-5">
+            <div class="icon-big text-center">
+             <i class="la la-heart-o text-primary"></i>
+            </div>
+           </div>
+           <div class="col-7 d-flex align-items-center">
+            <div class="numbers">
+             <p class="card-category">Followers</p>
+             <h4 class="card-title">+45K</h4>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div> -->
+                    </div>
 
-        </section>
-        <!-- users edit ends -->
 
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="pull-left">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://www.themekita.com">
+                                    ThemeKita
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Help
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://themewagon.com/license/#free-item">
+                                    Licenses
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="copyright ml-auto">
+                        2018, made with <i class="la la-heart heart text-danger"></i> by <a
+                            href="http://www.themekita.com">ThemeKita</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
+                    <p>
+                        <b>We'll let you know when it's done</b>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/chartist/chartist.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/jquery-mapael/jquery.mapael.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/jquery-mapael/maps/world_countries.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/js/ready.min.js') }}"></script>
+<script src="{{ asset('assets/js/demo.js') }}"></script>
 
-
-
-@endsection
-
-
-@push('script')
-
-
-    <!-- BEGIN: Vendor JS-->
-    <script src="{{ asset('/vendors/js/vendors.min.js') }}"></script>
-    <!-- BEGIN Vendor JS-->
-
-    <!-- BEGIN: Page Vendor JS-->
-
-    <script src="{{ asset('/vendors/js/charts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('/vendors/js/extensions/toastr.min.js') }}"></script>
-    <script src="{{ asset('/vendors/js/extensions/moment.min.js') }}"></script>
-    <script src="{{ asset('/vendors/js/tables/datatable/datatables.min.js') }}"></script>
-    <script src="{{ asset('/vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
-    <script src="{{ asset('/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('/vendors/js/tables/datatable/responsive.bootstrap.min.js') }}"></script>
-    <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Theme JS-->
-    <script src="{{ asset('/js/core/app-menu.min.js') }}"></script>
-    <script src="{{ asset('/js/core/app.min.js') }}"></script>
-    <script src="{{ asset('/js/scripts/customizer.min.js') }}"></script>
-    <!-- END: Theme JS-->
-
-    <!-- BEGIN: Page JS-->
-    <script src="{{ asset('/js/scripts/pages/dashboard-analytics.min.js') }}"></script>
-    <script src="{{ asset('/js/scripts/pages/app-invoice-list.min.js') }}"></script>
-    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
-    <!-- Chartisan -->
-    <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
-
-    {{-- <script>
-        $(window).on('load', function() {
-            const chart = new Chartisan({
-                el: '#chart',
-                url: "@chart('sample_chart')",
-            });
-            console.log('kebuka');
-        })
-    </script> --}}
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script type="text/javascript">
-        var users = <?php echo json_encode($users); ?>;
-
-        Highcharts.chart('containerr', {
-            title: {
-                text: 'Total Penjualan Perbulan'
-            },
-            subtitle: {
-                text: 'Source: Transaksi'
-            },
-            xAxis: {
-                categories: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu']
-            },
-            yAxis: {
-                title: {
-                    text: 'Jumlah Penjualan'
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
-            plotOptions: {
-                series: {
-                    allowPointSelect: true
-                }
-            },
-            series: [{
-                name: 'Transaksi',
-                data: users
-            }],
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 200
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
-            }
-        });
-    </script>
-@endpush
+</html>
